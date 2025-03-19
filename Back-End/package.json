@@ -3,10 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node ./src/server/server.js",
+    "dev" : "nodemon ./src/server/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "@hapi/hapi": "^21.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
 }
