@@ -15,7 +15,6 @@ export function vigenereEncrypt(plaintext, key) {
             ciphertext += char;
         }
     }
-  
     return ciphertext;
 }
 
@@ -23,7 +22,6 @@ export function vigenereDecrypt(ciphertext, key) {
     let plaintext = "";
     key = key.toLowerCase();
     let keyLength = key.length;
-  
     for (let i = 0, j = 0; i < ciphertext.length; i++) {
         let char = ciphertext[i];
 
@@ -36,6 +34,5 @@ export function vigenereDecrypt(ciphertext, key) {
             plaintext += char;
         }
     }
-  
     return plaintext;
 }

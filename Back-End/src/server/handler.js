@@ -25,7 +25,7 @@ const autokeyVigenereHandler = (request, h) => {
         return h.response({
             status: "success",
             message: "text successfully descrypted",
-            cipherText: plainText,
+            plainText: plainText,
         });
     }
 }
@@ -51,7 +51,7 @@ const affineCipherHandler = (request, h) => {
         return h.response({
             status: "success",
             message: "text successfully descrypted",
-            cipherText: plainText,
+            plainText: plainText,
         });
     }
 }
@@ -77,7 +77,7 @@ const hillCipherHandler = (request, h) => {
         return h.response({
             status: "success",
             message: "text successfully descrypted",
-            cipherText: plainText,
+            plainText: plainText,
         });
     }
 }
@@ -103,7 +103,7 @@ const vigenereCipherHandler = (request, h) => {
         return h.response({
             status: "success",
             message: "text successfully descrypted",
-            cipherText: plainText,
+            plainText: plainText,
         });
     }
 }
