@@ -1,4 +1,4 @@
-const { autokeyVigenereHandler, affineCipherHandler, hillCipherHandler, vigenereCipherHandler } = require("./handler")
+const { autokeyVigenereHandler, affineCipherHandler, hillCipherHandler, vigenereCipherHandler, playfairCipherHandler } = require("./handler")
 
 const routes = [
     {
@@ -20,6 +20,11 @@ const routes = [
         method: "POST",
         path: "/vigenereCipher",
         handler: vigenereCipherHandler,
+    },
+    {
+        method: "POST",
+        path: "/playFairCipher",
+        handler: playfairCipherHandler,
     }
 ]
 
