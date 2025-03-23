@@ -1,0 +1,280 @@
+@import "tailwindcss";
+
+/* Container utama */
+.landing-container {
+  display: flex;
+  height: 100%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.light-mode {
+  background-color: #e8eaf6;
+  color: #8590cf;
+}
+
+.dark-mode {
+  background-color: #1a202c;
+  color: white;
+}
+
+/* sidebar */
+.sidebar-container {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  gap: 20px;
+  z-index: 1;
+  width: 80px;
+}
+
+.wrapper{
+  background-color: #E8EAF6;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.wrapper > a {
+  color: #5c6bc0;
+  width: 25px;
+  height: 25px;
+  border-radius: 6px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.wrapper-menu > button > img{
+  width: 25px;
+}
+
+.wrapper-menu > button{
+  display: flex;
+  flex-direction: row;
+  background-color: #E8EAF6;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.wrapper-home{
+  background-color: #E8EAF6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.wrapper-home > a{
+  background-color: #ffffff;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.wrapper-home > a > img{
+  width: 25px;
+  height: 25px;
+}
+
+.hide{
+  display: none;
+}
+
+.openbar-container{
+  z-index: 2;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #FFFFFF;
+  padding: 35px 15px 15px 15px;
+}
+
+.wrapper-hideside-menu > button > img{
+  width: 30px;
+}
+
+.wrapper-hideside-menu > button > h4{
+  font-size: 1.2rem;
+}
+
+.wrapper-hideside-menu > button{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.wrapper-hideside-home > a {
+  background-color: #E8EAF6;
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+.wrapper-hideside-home > a > img{
+  width: 28px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.wrapper-hideside-home > a > h4{
+  font-size: 0.9rem;
+}
+
+.wrapper-hideside > a{
+  background-color: #E8EAF6;
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+.wrapper-hideside > a > h1{
+  color: #5c6bc0;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.wrapper-hideside > a > h4{
+  font-size: 0.8rem;
+  width: 130px;
+}
+
+/* Overlay untuk sidebar */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar.open + .main-content {
+  margin-left: 16rem;
+}
+
+.navbar {
+  display: flex;
+  height: 96px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #8590cf;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-title {
+  font-size: 2rem;
+  font-weight: medium;
+}
+
+.toggle-darkmode {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background-color: white;
+  color: #3949AB;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+.toggle-darkmode:hover {
+  background-color: #9FA8DA;
+}
+
+.moon-icon {
+  width: 36px;
+  height: auto;
+}
+
+/* Content */
+/* .content {
+  padding: 2rem;
+} */
+
+.content-title {
+  font-size: 2rem;
+  background-color: #D4D8F4;
+  color: white;
+  padding: 2rem;
+}
+
+.content-text {
+  font-size: 1.3rem;
+  padding: 2rem;
+}
+
+.cipher-cards {
+  display: grid;
+  padding: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-around;
+  text-align: center;
+  gap: 50px;
+}
+
+@media (min-width: 768px) {
+  .cipher-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cipher-card {
+  border-radius: 6px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: background 0.3s ease-in-out;
+}
+
+.chiper-title {
+  background-color: #5C6BC0;
+  color: white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 1rem;
+  font-size: 1.3rem;
+  align-items: center;
+}
+
+.chiper-text {
+  color: black;
+  font-size: 1rem;
+  padding: 1rem;
+  
+}
+
+.dark-mode .cipher-card {
+  background-color: #2d3748;
+  color: white;
+}
