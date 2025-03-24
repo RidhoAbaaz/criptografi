@@ -1,0 +1,401 @@
+@import "tailwindcss";
+
+/* Container utama */
+.landingContainer {
+  display: flex;
+  height: 100%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.lightMode {
+  background-color: #e8eaf6;
+  color: #8590cf;
+}
+
+.darkMode {
+  background-color: #1a202c;
+  color: white;
+}
+
+/* sidebar */
+.sidebarContainer {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+  background-color: #ffffff;
+  gap: 20px;
+  z-index: 2000;
+  width: 80px;
+  position: fixed; /* Add this line */
+  top: 0; /* Add this line */
+  left: 0; /* Add this line */
+  height: 100vh;
+  transition: width 0.3s ease; 
+}
+
+.sidebarContainer.expanded {
+  width: 250px; /* Adjust the width as needed */
+  align-items: flex-start;
+  padding-left: 15px;
+}
+
+.sidebarContainer.expanded .wrapper{
+  width: 220px;
+  justify-content: flex-start;
+  padding-left: 10px;
+}
+
+.sidebarContainer.expanded .wrapperHome{
+  width: 220px;
+  justify-content: flex-start; 
+  padding-left: 10px;
+}
+
+.sidebarContainer.expanded .wrapperMenu > button{
+  background-color: #ffffff;
+}
+
+.wrapper {
+  background-color: #E8EAF6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  position: relative;
+  min-width: 50px; /* Add this line */
+  min-height: 50px;
+  transition: width 0.3s ease; 
+  cursor: pointer; /* Add this line */
+}
+
+.wrapper > a {
+  color: #5c6bc0;
+  display: flex; /* Add this line */
+  align-items: center; /* Add this line */
+  justify-content: center; /* Add this line */
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  text-align: center;
+  background-color: #ffffff;
+  position: absolute;
+}
+
+.sidebarContainer.expanded .wrapper h3 {
+  margin-left: 40px; /* Adjust the spacing as needed */
+  font-size: 0.85rem;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 0.1s;
+  position: static; /* Add this line */
+  font-weight:400;
+}
+
+.wrapper h3 {
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute; /* Add this line */
+  right: 300%; /* Add this line */
+}
+
+.wrapperMenu > button > img {
+  width: 25px;
+}
+
+.wrapperMenu {
+  display: flex;
+  align-items: center;
+}
+
+.wrapperMenu > button {
+  display: flex;
+  flex-direction: row;
+  background-color: #E8EAF6;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease; 
+}
+
+.sidebarContainer.expanded .wrapperMenu h2 {
+  margin-left: 10px; /* Adjust the spacing as needed */
+  font-size: 1.13rem;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 0.1s;
+  position: static; /* Add this line */
+  font-weight:500;
+}
+
+.wrapperMenu h2 {
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute; /* Add this line */
+  top: 200%; /* Add this line */
+}
+
+.wrapperHome {
+  background-color: #5C6BC0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10px;
+  justify-content: flex-start; 
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  min-width: 50px; /* Add this line */
+  min-height: 50px;
+  transition: width 0.3s ease;
+  cursor: pointer; /* Add this line */
+}
+
+.wrapperHome > a {
+  background-color: #ffffff;
+  padding: 3px;
+  border-radius: 5px;
+  position: absolute;
+}
+
+.wrapperHome > a > img {
+  width: 25px;
+  height: 25px;
+}
+
+.sidebarContainer.expanded .wrapperHome h3 {
+  margin-left: 40px; /* Adjust the spacing as needed */
+  font-size: 1rem;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out 0.1s;
+  position: static; /* Add this line */
+  font-weight:400;
+  color: #ffffff;
+}
+
+.wrapperHome h3 {
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute; /* Add this line */
+  top: 200%; /* Add this line */
+}
+
+.hide {
+  display: none;
+}
+
+.openbarContainer {
+  z-index: 3000;
+  position: fixed;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #FFFFFF;
+  padding: 35px 15px 15px 15px;
+}
+
+.wrapperHidesideMenu > button > img {
+  width: 30px;
+}
+
+.wrapperHidesideMenu > button > h4 {
+  font-size: 1.2rem;
+}
+
+.wrapperHidesideMenu > button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.wrapperHidesideHome > a {
+  background-color: #E8EAF6;
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+.wrapperHidesideHome > a > img {
+  width: 28px;
+  padding: 3px;
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+.wrapperHidesideHome > a > h4 {
+  font-size: 0.9rem;
+}
+
+.wrapperHideside > a {
+  background-color: #E8EAF6;
+  display: flex;
+  height: 50px;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  padding: 0px 10px;
+  border-radius: 5px;
+}
+
+.wrapperHideside > a > h1 {
+  color: #5c6bc0;
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.wrapperHideside > a > h4 {
+  font-size: 0.8rem;
+  width: 130px;
+}
+
+/* Overlay untuk sidebar */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 1500; /* Ensure it is above other content */
+  opacity: 0; /* Start with opacity 0 */
+  transition: opacity 0.3s ease-in-out; /* Add transition for fading effect */
+  pointer-events: none;
+}
+
+.overlay.visible {
+  opacity: 1; /* Set opacity to 1 when visible */
+  pointer-events: all;
+}
+
+/* Main content */
+.mainContent {
+  flex: 1;
+  padding-top: 96px;
+  padding-left: 80px;
+}
+
+.sidebarOpen + .mainContent {
+  margin-left: 16rem;
+}
+
+.navbar {
+  display: flex;
+  height: 96px;
+  align-items: center;
+  justify-content: space-between; /* Sesuaikan dengan konten */
+  padding: 1rem;
+  background-color: #8590cf;
+  color: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+
+  position: fixed; /* Agar tetap di posisi atas */
+  top: 0; /* Menempel di bagian atas */
+  left: 0;
+  width: 100%; /* Lebar penuh */
+  z-index: 1000; /* Pastikan berada di atas elemen lain */
+  padding-left: 80px;
+}
+
+.navbarTitle {
+  font-size: 2rem;
+  font-weight: medium;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.toggleDarkmode {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background-color: white;
+  color: #3949AB;
+  transition: background 0.3s;
+  cursor: pointer;
+  position: absolute;
+  right: 25px;
+}
+
+.toggleDarkmode:hover {
+  background-color: #9FA8DA;
+}
+
+.moonIcon {
+  width: 36px;
+  height: auto;
+}
+
+/* Content */
+.contentTitle {
+  font-size: 2rem;
+  background-color: #D4D8F4;
+  color: white;
+  padding: 2rem;
+}
+
+.contentText {
+  font-size: 1.3rem;
+  padding: 2rem;
+}
+
+.cipherCards {
+  display: grid;
+  padding: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: space-around;
+  text-align: center;
+  gap: 50px;
+}
+
+@media (min-width: 768px) {
+  .cipherCards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cipherCard {
+  border-radius: 6px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: background 0.3s ease-in-out;
+}
+
+.chiperTitle {
+  background-color: #5C6BC0;
+  color: white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  padding: 1rem;
+  font-size: 1.3rem;
+  align-items: center;
+}
+
+.chiperText {
+  color: black;
+  font-size: 1rem;
+  padding: 1rem;
+}
+
+.darkMode .cipherCard {
+  background-color: #2d3748;
+  color: white;
+}
