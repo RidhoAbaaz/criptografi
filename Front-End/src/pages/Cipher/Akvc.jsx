@@ -3,14 +3,13 @@ import { useState } from "react";
 import HomeIcon from "../../assets/home.png";
 import MoonIcon from "../../assets/ToggleOnly.png";
 import MenuIcon from "../../assets/menu.png"
-import DownloadIcon from "../../assets/download.png"; 
-import UploadIcon from "../../assets/link.png";
 import KeyIcon from "../../assets/key.png";
+import ChipertextField from "../../components/TextField/CipherTextField";
+import PlainTextField from "../../components/TextField/PlainTextField";
 
 const Akvc = () => {
   const [isDarkMode, setDarkMode] = useState(false);
   const [sidebar, setSidebar] = useState(false)
-  const [selectedFormat, setSelectedFormat] = useState("text");
 
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
@@ -118,34 +117,9 @@ const Akvc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-            <div className="chiper-plaintext">
-              <div className="plaintext-title">
-                <h2>Plaintext</h2>
-                <select value={selectedFormat} onChange={(e) => setSelectedFormat(e.target.value)}>
-                  <option value="text">Text</option>
-                  <option value="binary">Binary</option>
-                </select>
-              </div>
-              <hr></hr>
-
-              <textarea className="plaintext-input" placeholder="Write plainteks here..." />
-              <hr></hr>
-
-              <div className="plaintext-footer">
-                <button className="upload-btn">
-                  Upload File
-                  <img src={UploadIcon} className="icon" alt="Upload" />
-                </button>
-                <button className="download-btn">
-                  Download <img src={DownloadIcon} className="icon" alt="Download" />
-                </button>
-              </div>
-            </div>
-
+            <PlainTextField />
             <div className="flex-container">
-              <div className="icon-arrow">
-                  <h1>&#8596;</h1>
-              </div>
+              <h1 className="icon-arrow">&#8596;</h1>
               <div className="chiper-key">
                 <div className="key-title">
                   <img src={KeyIcon} className="icon-key" alt="Key" />
@@ -155,30 +129,7 @@ const Akvc = () => {
                 <input type="text"placeholder="Write the key here..."/>
               </div>
             </div>
-
-            <div className="chiper-chipertext">
-              <div className="chipertext-title">
-                <h2>Chipertext</h2>
-                <select value={selectedFormat} onChange={(e) => setSelectedFormat(e.target.value)}>
-                  <option value="text">Text</option>
-                  <option value="binary">Binary</option>
-                </select>
-              </div>
-              <hr></hr>
-
-              <textarea className="chipertext-input" placeholder="Write chipertext here..." />
-              <hr></hr>
-
-              <div className="chipertext-footer">
-                <button className="upload-btn">
-                  Upload File
-                  <img src={UploadIcon} className="icon" alt="Upload" />
-                </button>
-                <button className="download-btn">
-                  Download <img src={DownloadIcon} className="icon" alt="Download" />
-                </button>
-              </div>
-            </div>
+            <ChipertextField />
           </div>
         </div>
       </div>
