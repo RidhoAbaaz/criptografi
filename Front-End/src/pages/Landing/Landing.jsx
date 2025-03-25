@@ -22,21 +22,21 @@ const Landing = () => {
   return (
     <div className={`${styles.landingContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <div className={`${styles.sidebarContainer} ${sidebar ? styles.expanded : ''}`}>
-        <div className={styles.wrapperMenu}  onClick={toggleSidebar}>
-          <button>
+        <div className={styles.wrapperMenu}>
+          <button onClick={toggleSidebar}>
             <img src={MenuIcon} alt="menu" />
           </button>
-          <h2>Navigation</h2>
+          <h2 onClick={!sidebar ? toggleSidebar : null}>Navigation</h2>
         </div>
-        <div className={styles.wrapperHome} onClick={() => window.location.href = '/'}>
-          <a href="/">
+        <div className={styles.wrapperHome}>
+          <a>
             <img src={HomeIcon} alt="" />
           </a>
           <h3>Home</h3>
         </div>
         <div className={styles.wrapper}  onClick={() => window.location.href = '/vcs'}>
           <a href="/vcs">1</a>
-          <h3>Vigenere Chiper Standard</h3>
+          <h3>Vigenere Cipher Standard</h3>
         </div>
         <div className={styles.wrapper} onClick={() => window.location.href = '/akvc'}>
           <a href="/akvc">2</a>
@@ -63,7 +63,7 @@ const Landing = () => {
       <div className={`${styles.overlay} ${sidebar ? styles.visible : ''}`}  onClick={sidebar ? toggleSidebar : null}></div>
       <div className={styles.mainContent}>
         <div className={styles.navbar}>
-          <h1 className={styles.navbarTitle}>ChiperVault</h1>
+          <h1 className={styles.navbarTitle}>CipherVault</h1>
           <button className={styles.toggleDarkmode} onClick={toggleDarkMode}>
             <span>Night Mode</span>
             <img src={MoonIcon} alt="Night Mode" className={styles.moonIcon} />
@@ -71,7 +71,7 @@ const Landing = () => {
         </div>
         <div className={styles.content}>
           <div className={styles.contentTitle}>
-            <h2>Welcome to ChiperVault</h2>
+            <h2>Welcome to CipherVault</h2>
           </div>
           <div className={styles.contentText}>
             <p>
@@ -83,37 +83,37 @@ const Landing = () => {
           </div>
           <div className={styles.cipherCards}>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Vigenere Chiper Standard</h2>
+              <h2 className={styles.chiperTitle}>Vigenere Cipher Standard</h2>
               <p className={styles.chiperText}>
                 Vigenere Cipher (Standard) adalah cipher polialfabetik yang mengenkripsi teks dengan menggeser huruf berdasarkan kata kunci berulang.
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Auto Key Vignere Chiper</h2>
+              <h2 className={styles.chiperTitle}>Auto-Key Vignere Cipher</h2>
               <p className={styles.chiperText}>
                 Auto-Key Vigenere Cipher adalah varian Vigenere yang lebih aman karena menggunakan sebagian teks asli sebagai kelanjutan kunci, mengurangi pola berulang.
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Extended Vigenere Chiper</h2>
+              <h2 className={styles.chiperTitle}>Extended Vigenere Cipher</h2>
               <p className={styles.chiperText}>
                 Extended Vigenere Cipher mendukung 256 karakter ASCII, memungkinkan enkripsi huruf, angka, dan simbol untuk fleksibilitas lebih luas.
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Affine Chiper</h2>
+              <h2 className={styles.chiperTitle}>Affine Cipher</h2>
               <p className={styles.chiperText}>
                 Affine Cipher menggunakan persamaan matematika (ax + b) mod 26 untuk mengenkripsi huruf, dengan keamanannya bergantung pada pemilihan a yang memiliki invers modular.
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Playfair Chiper</h2>
+              <h2 className={styles.chiperTitle}>Playfair Cipher</h2>
               <p className={styles.chiperText}>
                 Playfair Cipher mengenkripsi pasangan huruf menggunakan tabel 5x5 berbasis kata kunci, membuatnya lebih sulit dipecahkan dibanding cipher substitusi tunggal.
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Hill Chiper</h2>
+              <h2 className={styles.chiperTitle}>Hill Cipher</h2>
               <p className={styles.chiperText}>
                 Hill Cipher mengenkripsi blok huruf menggunakan perkalian matriks modulo 26, menjadikannya lebih tahan terhadap analisis frekuensi dibanding cipher sederhana.
               </p>

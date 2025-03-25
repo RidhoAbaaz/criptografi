@@ -30,14 +30,20 @@
   position: fixed; /* Add this line */
   top: 0; /* Add this line */
   left: 0; /* Add this line */
-  height: 100vh;
+  height:100vh;
   transition: width 0.3s ease; 
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
 }
+
+
 
 .sidebarContainer.expanded {
   width: 250px; /* Adjust the width as needed */
   align-items: flex-start;
   padding-left: 15px;
+  overflow-y: auto;
 }
 
 .sidebarContainer.expanded .wrapper{
@@ -99,7 +105,7 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute; /* Add this line */
-  right: 300%; /* Add this line */
+  pointer-events: none;
 }
 
 .wrapperMenu > button > img {
@@ -132,6 +138,7 @@
   transition: opacity 0.3s ease-in-out 0.1s;
   position: static; /* Add this line */
   font-weight:500;
+  pointer-events:fill;
 }
 
 .wrapperMenu h2 {
@@ -139,7 +146,7 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute; /* Add this line */
-  top: 200%; /* Add this line */
+  pointer-events: none;
 }
 
 .wrapperHome {
@@ -155,7 +162,6 @@
   min-width: 50px; /* Add this line */
   min-height: 50px;
   transition: width 0.3s ease;
-  cursor: pointer; /* Add this line */
 }
 
 .wrapperHome > a {
@@ -185,7 +191,7 @@
   white-space: nowrap;
   overflow: hidden;
   position: absolute; /* Add this line */
-  top: 200%; /* Add this line */
+  right: 300%; /* Add this line */
 }
 
 .hide {
