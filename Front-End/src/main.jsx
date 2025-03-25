@@ -1,6 +1,5 @@
 import {createRoot} from "react-dom/client"
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Website from './pages/Website.jsx'
 import Landing from './pages/Landing/Landing.jsx'
 import Vcs from "./pages/Cipher/Vcs.jsx"
 import Akvc from "./pages/Cipher/Akvc.jsx"

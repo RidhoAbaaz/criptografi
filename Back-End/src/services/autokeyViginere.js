@@ -19,10 +19,6 @@ const encryptAutokeyVigenere = (plaintext, key) => {
         let p = charToIndex(plaintext[i]);
         let k = charToIndex(fullKey[i]);
         let c = (p + k) % 26;
-
-        if (i % 5 == 0 && i !== 0) {
-            ciphertext += " ";
-        }
         
         ciphertext += indexToChar(c);
     }

@@ -9,7 +9,7 @@ export default function PlainTextField() {
     return (
         <div className={styles.textField}>
             <div className={styles.textTitle}>
-                <h2>Ciphertext</h2>
+                <h2>PlainText</h2>
                 <select value={selectedFormat} onChange={(e) => setSelectedFormat(e.target.value)}>
                     <option value="text">Text</option>
                     <option value="binary">Binary</option>
@@ -23,9 +23,8 @@ export default function PlainTextField() {
             <div className={styles.textFooter}>
                 <div className={styles.footerWrap}>
                     <UploadButton text="Upload File" icon="bi bi-paperclip" />
-                    <DownloadButton text="Download" icon="bi bi-download" />
                 </div>
-                <DownloadButton text="Decrypt" icon="bi bi-unlock" />
+                <DownloadButton text="Encrypt" icon="bi bi-lock" />
             </div>
         </div>
     );

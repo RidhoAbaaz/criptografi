@@ -1,5 +1,6 @@
 const { encryptAffine, decryptAffine } = require("../services/affineCipher");
 const { encryptAutokeyVigenere, decryptAutokeyVigenere } = require("../services/autokeyViginere");
+const { extendedVigenereEncrypt, extendedVigenereDecrypt } = require("../services/extendedVigenereCipher");
 const { hillEncrypt, hillDecrypt } = require("../services/hillCipher");
 const { playfairCipher, decryptPlayfairCipher } = require("../services/playFairCipher");
 const { vigenereEncrypt, vigenereDecrypt } = require("../services/vigenereChipper")
@@ -133,6 +134,32 @@ const playfairCipherHandler = (request, h) => {
             plainText: plainText,
         });
     }
-} 
+}
 
-module.exports = { autokeyVigenereHandler, affineCipherHandler, hillCipherHandler, vigenereCipherHandler, playfairCipherHandler };
+const extendedVigenereHandler = (request, h) => {
+    const value = request.payload;
+    if (value.method === "encrypt") {
+        if (!value.plainText || !value.key) {
+            throw new Error("missing value, please fill all field");
+        }
+        const cipherText = extendedVigenereEncrypt(value.plainText, value.key);
+        return h.response({
+            status: "success",
+            message: "text successfully encrypted",
+            cipherText: cipherText,
+        });
+    } 
+    else {
+        if (!value.cipherText || !value.key) {
+            throw new Error("missing value, please fill all field");
+        }
+        const plainText = extendedVigenereDecrypt(value.cipherText, value.key);
+        return h.response({
+            status: "success",
+            message: "text successfully descrypted",
+            plainText: plainText,
+        });
+    }
+}
+
+module.exports = { autokeyVigenereHandler, affineCipherHandler, hillCipherHandler, vigenereCipherHandler, playfairCipherHandler, extendedVigenereHandler };

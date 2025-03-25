@@ -290,6 +290,7 @@
   flex: 1;
   padding-top: 96px;
   padding-left: 80px;
+  filter: blur(0px);
 }
 
 .sidebarOpen + .mainContent {
