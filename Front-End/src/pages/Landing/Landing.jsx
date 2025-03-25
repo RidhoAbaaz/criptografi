@@ -45,7 +45,7 @@ const Landing = () => {
               </p>
             </div>
             <div className={styles.cipherCard}>
-              <h2 className={styles.chiperTitle}>Auto Key Vignere Cipher</h2>
+              <h2 className={styles.chiperTitle}>Auto-Key Vigenere Cipher</h2>
               <p className={styles.chiperText}>
                 Auto-Key Vigenere Cipher adalah varian Vigenere yang lebih aman karena menggunakan sebagian teks asli sebagai kelanjutan kunci, mengurangi pola berulang.
               </p>
