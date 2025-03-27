@@ -1,13 +1,14 @@
 import "./Cipher.style.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import MoonIcon from "../../assets/ToggleOnly.png";
 import ChipertextField from "../../components/TextField/CipherTextField";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import SideBar from "../../components/SideBar/SideBar";
 import KeyField from "../../components/TextField/KeyField";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Akvc = () => {
-  const [isDarkMode, setDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode } = useContext(ThemeContext);
 
   const autokey = useRef(null);
 

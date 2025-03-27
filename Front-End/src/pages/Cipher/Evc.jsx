@@ -1,13 +1,14 @@
 import "./Cipher.style.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import MoonIcon from "../../assets/ToggleOnly.png";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import KeyField from "../../components/TextField/KeyField";
 import CipherTextField from "../../components/TextField/CipherTextField";
 import SideBar from "../../components/SideBar/SideBar";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Evc = () => {
-  const [isDarkMode, setDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode } = useContext(ThemeContext);
   const extended = useRef(null);
 
   const toggleDarkMode = () => {

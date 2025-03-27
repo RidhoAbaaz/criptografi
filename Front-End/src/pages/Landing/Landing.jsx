@@ -1,10 +1,11 @@
 import styles from "./Landing.module.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import MoonIcon from "../../assets/ToggleOnly.png";
 import SideBar from "../../components/SideBar/SideBar";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Landing = () => {
-  const [isDarkMode, setDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode } = useContext(ThemeContext);
 
   const landingPage = useRef(null);
 

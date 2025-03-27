@@ -1,12 +1,13 @@
 import "./Cipher.style.css";
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import KeyField from "../../components/TextField/KeyField";
 import CipherTextField from "../../components/TextField/CipherTextField";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Ac = () => {
-  const [isDarkMode, setDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode } = useContext(ThemeContext);
 
   const affinePage = useRef(null);
 
