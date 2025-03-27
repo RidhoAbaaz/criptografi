@@ -16,7 +16,7 @@ const Evc = () => {
 
   return (
     <div className="landing-container">
-      <SideBar ref={extended}/>
+      <SideBar ref={extended}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={extended} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>

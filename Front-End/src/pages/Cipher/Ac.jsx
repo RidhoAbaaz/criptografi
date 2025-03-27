@@ -16,7 +16,7 @@ const Ac = () => {
 
   return (
     <div className="landing-container">
-      <SideBar ref={affinePage}/>
+      <SideBar ref={affinePage}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={affinePage} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>

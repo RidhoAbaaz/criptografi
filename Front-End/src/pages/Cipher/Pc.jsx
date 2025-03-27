@@ -16,7 +16,7 @@ const Pc = () => {
 
   return (
     <div className="landing-container">
-      <SideBar ref={playfair}/>
+      <SideBar ref={playfair}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={playfair} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>

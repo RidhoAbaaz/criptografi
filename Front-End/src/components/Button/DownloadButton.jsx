@@ -4,7 +4,7 @@ export default function DownloadButton({ text, icon, event }) {
     return (
         <button className={styles.downloadBtn} onClick={event}>
             {text}
-            <i class={icon}></i>
+            <i className={icon}></i>
         </button>
     )
 }

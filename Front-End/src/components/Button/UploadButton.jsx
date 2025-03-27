@@ -4,7 +4,7 @@ export default function UploadButton({ text, icon, event }) {
     return (
         <button className={styles.uploadBtn} onClick={event}>
             {text}
-            <i class={icon}></i>
+            <i className={icon}></i>
         </button>
     )
 }

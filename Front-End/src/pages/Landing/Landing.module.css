@@ -51,12 +51,20 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  background-color: white;
-  color: #3949AB;
   transition: background 0.3s;
   cursor: pointer;
   position: absolute;
   right: 25px;
+}
+
+.toggleDarkmodeT {
+  background-color: #282828;
+  color: #FFFFFF;
+}
+
+.toggleDarkmodeF {
+  background-color: white;
+  color: #3949AB;
 }
 
 .toggleDarkmode:hover {
@@ -66,7 +74,6 @@
 .slider {
   height: 20px;
   width: 40px;
-  background-color: #8590cf;
   border-radius: 30px;
   display: flex;
   padding: 2px;
@@ -116,9 +123,10 @@
 
 .cipherCard {
   border-radius: 6px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 4px 8px 15px rgba(0, 0, 0, 0.2);
   background-color: white;
-  transition: background 0.3s ease-in-out;
+  transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  outline: 1px solid black;
 }
 
 .chiperTitle {
@@ -129,6 +137,7 @@
   padding: 1rem;
   font-size: 1.3rem;
   align-items: center;
+  transition: background-color 0.3s ease;
 }
 
 .chiperText {

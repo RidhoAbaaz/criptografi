@@ -17,7 +17,7 @@ const Akvc = () => {
 
   return (
     <div className="landing-container">
-      <SideBar ref={autokey}/>
+      <SideBar ref={autokey}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={autokey} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>

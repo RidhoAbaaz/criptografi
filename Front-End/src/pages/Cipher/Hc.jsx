@@ -16,7 +16,7 @@ const Hc = () => {
 
   return (
     <div className="landing-container" style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
-      <SideBar ref={hillCipher}/>
+      <SideBar ref={hillCipher}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={hillCipher}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
