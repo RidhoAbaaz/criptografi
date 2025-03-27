@@ -9,7 +9,8 @@
 .main-content {
   flex: 1;
   padding-left: 80px;
-  transition: background-color 0.3s ease
+  padding-top: 96px;
+  transition: background-color 0.3s ease, filter 0.3s ease;
 }
 
 .sidebar.open + .main-content {
@@ -26,11 +27,19 @@
   color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease;
+  position: fixed; /* Agar tetap di posisi atas */
+  top: 0; /* Menempel di bagian atas */
+  left: 0;
+  width: 100%; /* Lebar penuh */
+  z-index: 1000; /* Pastikan berada di atas elemen lain */
+  padding-left: 80px;
 }
 
 .navbar-title {
   font-size: 2rem;
   font-weight: medium;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .toggle-darkmode {
@@ -39,10 +48,20 @@
   gap: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  background-color: white;
-  color: #3949AB;
   transition: background 0.3s;
   cursor: pointer;
+  position: absolute;
+  right: 25px;
+}
+
+.toggle-darkmode-t {
+  background-color: #282828;
+  color: #FFFFFF;
+}
+
+.toggle-darkmode-f {
+  background-color: white;
+  color: #3949AB;
 }
 
 .toggle-darkmode:hover {

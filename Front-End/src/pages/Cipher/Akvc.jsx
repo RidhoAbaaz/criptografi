@@ -19,13 +19,13 @@ const Akvc = () => {
     <div className="landing-container">
       <SideBar ref={autokey}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
-      <div className="main-content" ref={autokey} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
+      <div className="main-content" ref={autokey} style={{ backgroundColor : isDarkMode ? "#303030" : "#E8EAF6"}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
           <h1 className="navbar-title">ChiperVault</h1>
-          <div className="toggle-darkmode" onClick={toggleDarkMode}>
+          <div className={`${"toggle-darkmode"} ${isDarkMode ? "toggle-darkmode-t" : "toggle-darkmode-f"}`} onClick={toggleDarkMode}>
             <span>Night Mode</span>
-            <div className="slider">
-              <i className="bi bi-moon" style={{ marginLeft : isDarkMode ? "20px" : "0px" }}></i>
+            <div className="slider" style={{ backgroundColor: isDarkMode ? "#3F51B5" : "#8590cf" }}>
+            <i className={`bi ${isDarkMode ? "bi-moon" : "bi-sun"}`} style={{ marginLeft : isDarkMode ? "20px" : "0px", color: isDarkMode ? "#3F51B5" : "#8590cf"}}></i>
             </div>
           </div>
         </div>
