@@ -14,22 +14,24 @@ const Landing = () => {
 
 
   return (
-    <div className={`${styles.landingContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
+    <div className={styles.landingContainer}>
       <SideBar ref={landingPage}/>
       {/* Main Content */}
-      <div className={styles.mainContent} ref={landingPage}>
-        <div className={styles.navbar}>
+      <div className={styles.mainContent} ref={landingPage} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
+        <div className={styles.navbar} style={{ backgroundColor : isDarkMode ? "#3F51B5" : "" }}>
           <h1 className={styles.navbarTitle}>CipherVault</h1>
-          <button className={styles.toggleDarkmode} onClick={toggleDarkMode}>
+          <div className={styles.toggleDarkmode} onClick={toggleDarkMode}>
             <span>Night Mode</span>
-            <img src={MoonIcon} alt="Night Mode" className={styles.moonIcon} />
-          </button>
+            <div className={styles.slider}>
+              <i className="bi bi-moon" style={{ marginLeft : isDarkMode ? "20px" : "0px" }}></i>
+            </div>
+          </div>
         </div>
         <div className={styles.content}>
-          <div className={styles.contentTitle}>
+          <div className={styles.contentTitle} style={{ backgroundColor : isDarkMode ? "#282828" : undefined }}>
             <h2>Welcome to CipherVault</h2>
           </div>
-          <div className={styles.contentText}>
+          <div className={styles.contentText} style={{ color : isDarkMode ? "white" : "", transition: "0.3s ease" }}>
             <p>
               Explore encryption and decryption with six powerful cryptographic algorithms.
               Our platform provides easy-to-use tools to encrypt and decrypt messages while learning the fundamentals of cryptography.

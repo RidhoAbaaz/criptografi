@@ -15,19 +15,20 @@ const Pc = () => {
   };
 
   return (
-    <div className={`landing-container ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+    <div className="landing-container">
       <SideBar ref={playfair}/>
       {/* Main Content */}
-      <div className="main-content" ref={playfair}>
-        <div className="navbar">
+      <div className="main-content" ref={playfair} style={{ backgroundColor : isDarkMode ? "#1C1C1E" : undefined}}>
+        <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
           <h1 className="navbar-title">ChiperVault</h1>
-          <button className="toggle-darkmode" onClick={toggleDarkMode}>
-            <span>Nightmode</span>
-            <img src={MoonIcon} alt="Night Mode" className="moon-icon" />
-          </button>
+          <div className="toggle-darkmode" onClick={toggleDarkMode}>
+            <span>Night Mode</span>
+            <div className="slider">
+              <i className="bi bi-moon" style={{ marginLeft : isDarkMode ? "20px" : "0px" }}></i>
+            </div>
+          </div>
         </div>
-
-        <div className="content">
+        <div className="content" style={{ backgroundColor : isDarkMode ? "#282828" : undefined }}>
           <div className="content-title">
             <h2>Playfair Cipher</h2>
           </div>

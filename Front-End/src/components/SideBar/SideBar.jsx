@@ -4,7 +4,7 @@ import MenuIcon from "../../assets/menu.png";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-export default function SideBar({ ref = null}) {
+export default function SideBar({ ref = null }) {
     const [sidebar, setSidebar] = useState(false);
     const location = useLocation();
 

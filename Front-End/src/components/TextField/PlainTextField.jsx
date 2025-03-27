@@ -17,7 +17,7 @@ export default function PlainTextField() {
             </div>
             <hr />
 
-            <textarea className={styles.textInput} placeholder="Write ciphertext here..." />
+            <textarea className={styles.textInput} placeholder="Write plaintext here..." />
             <hr />
 
             <div className={styles.textFooter}>

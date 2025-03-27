@@ -5,185 +5,11 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.light-mode {
-  background-color: #e8eaf6;
-  color: #8590cf;
-}
-
-.dark-mode {
-  background-color: #1a202c;
-  color: white;
-}
-
-/* sidebar */
-.sidebar-container {
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  gap: 20px;
-  z-index: 1;
-  width: 80px;
-}
-
-.wrapper{
-  background-color: #E8EAF6;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  width: 50px;
-  height: 50px;
-}
-
-.wrapper > a {
-  color: #5c6bc0;
-  width: 25px;
-  height: 25px;
-  border-radius: 6px;
-  text-align: center;
-  background-color: #ffffff;
-}
-
-.wrapper-menu > button > img{
-  width: 25px;
-}
-
-.wrapper-menu > button{
-  display: flex;
-  flex-direction: row;
-  background-color: #E8EAF6;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-}
-
-.wrapper-home{
-  background-color: #E8EAF6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  width: 50px;
-  height: 50px;
-}
-
-.wrapper-home > a{
-  background-color: #ffffff;
-  padding: 3px;
-  border-radius: 5px;
-}
-
-.wrapper-home > a > img{
-  width: 25px;
-  height: 25px;
-}
-
-.hide{
-  display: none;
-}
-
-.openbar-container{
-  z-index: 2;
-  position: fixed;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  background-color: #FFFFFF;
-  padding: 35px 15px 15px 15px;
-}
-
-.wrapper-hideside-menu > button > img{
-  width: 30px;
-}
-
-.wrapper-hideside-menu > button > h4{
-  font-size: 1.2rem;
-}
-
-.wrapper-hideside-menu > button{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.wrapper-hideside-home > a {
-  background-color: #E8EAF6;
-  display: flex;
-  height: 50px;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  padding: 0px 10px;
-  border-radius: 5px;
-}
-
-.wrapper-hideside-home > a > img{
-  width: 28px;
-  padding: 3px;
-  border-radius: 5px;
-  background-color: #ffffff;
-}
-
-.wrapper-hideside-home > a > h4{
-  font-size: 0.9rem;
-}
-
-.wrapper-hideside > a{
-  background-color: #E8EAF6;
-  display: flex;
-  height: 50px;
-  flex-direction: row;
-  align-items: center;
-  gap: 15px;
-  padding: 0px 10px;
-  border-radius: 5px;
-}
-
-.wrapper-hideside > a > h1{
-  color: #5c6bc0;
-  width: 25px;
-  height: 25px;
-  border-radius: 5px;
-  text-align: center;
-  background-color: #ffffff;
-}
-
-.wrapper-hideside > a > h4{
-  font-size: 0.8rem;
-  width: 130px;
-}
-
-/* Overlay untuk sidebar */
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  z-index: 1500; /* Ensure it is above other content */
-  opacity: 0; /* Start with opacity 0 */
-  transition: opacity 0.3s ease-in-out; /* Add transition for fading effect */
-  pointer-events: none;
-}
-
-.overlay.visible {
-  opacity: 1; /* Set opacity to 1 when visible */
-  pointer-events: all;
-}
-
 /* Main content */
 .main-content {
   flex: 1;
   padding-left: 80px;
+  transition: background-color 0.3s ease
 }
 
 .sidebar.open + .main-content {
@@ -199,6 +25,7 @@
   background-color: #8590cf;
   color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
 
 .navbar-title {
@@ -222,15 +49,35 @@
   background-color: #9FA8DA;
 }
 
-.moon-icon {
-  width: 36px;
-  height: auto;
+.slider {
+  height: 20px;
+  width: 40px;
+  background-color: #8590cf;
+  border-radius: 30px;
+  display: flex;
+  padding: 2px;
+  margin-left: 0px;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
 
+.slider i {
+  padding-left: 2px;
+  width: 18px;
+  border-radius: 25px;
+  background-color: white;
+  font-size: 12px;
+  margin-left: 0px;
+  transition: margin-left 0.3s ease;
+}
 
-.content h2 {
+.content {
+  font-size: 2rem;
+  background-color: #D4D8F4;
+  color: #FFFF;
+  padding: 2rem;
   text-align: center;
-  color: #989898;
+  transition: background-color 0.3s ease;
 }
 
 .chiper-grid {
@@ -270,13 +117,13 @@
 
 .flex-container {
   display: grid;
+  gap: 10px;
   grid-row: 1fr 1fr 1fr;
 }
 
 .icon-arrow {
   font-size: 6rem;
-  grid-row-start: 1;
-  grid-row-end: 3;
+  color: #3949AB;
 }
 
 .icon {
