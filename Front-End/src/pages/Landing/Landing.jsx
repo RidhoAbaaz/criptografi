@@ -1,6 +1,5 @@
 import styles from "./Landing.module.css";
-import { useRef, useState, useContext } from "react";
-import MoonIcon from "../../assets/ToggleOnly.png";
+import { useRef, useContext } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import { ThemeContext } from "../../context/ThemeContext";
 
