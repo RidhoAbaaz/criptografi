@@ -109,10 +109,15 @@
 }
 
 .chiper-key {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   background: white;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border: 1px solid #989898;
+  padding: 5px;
+  gap: 5px;
 }
 
 .chiper-key h2 {
@@ -120,6 +125,29 @@
   font-size: 1rem;
   font-weight: medium;
   text-align: start;
+}
+
+.chiper-key input {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 100%;
+  padding: 10px;
+  height: 30px;
+}
+
+.chiper-key input:focus {
+  outline: none;
+}
+
+.chiper-key input::placeholder {
+  font-size: 15px;
+}
+
+.chiper-key p {
+  text-align: start;
+  font-size: 9px;
+  color: #989898;
+  font-style: italic;
 }
 
 .key-title {
@@ -138,6 +166,10 @@
   display: grid;
   gap: 10px;
   grid-row: 1fr 1fr 1fr;
+}
+
+.affine-container {
+  margin-top: -50px;
 }
 
 .icon-arrow {

@@ -7,7 +7,6 @@ const { vigenereEncrypt, vigenereDecrypt } = require("../services/vigenereChippe
 
 const autokeyVigenereHandler = (request, h) => {
     const value = request.payload;
-    console.log(value);
     if (value.method === "encrypt") {
         if (!value.plainText || !value.key) {
             throw new Error("missing value, please fill all field");
@@ -34,6 +33,7 @@ const autokeyVigenereHandler = (request, h) => {
 
 const affineCipherHandler = (request, h) => {
     const value = request.payload;
+    console.log(value);
     if (value.method === "encrypt") {
         if (!value.plainText || !value.multiplicationKey || !value.additionKey) {
             throw new Error("missing value, please fill all field");

@@ -8,15 +8,15 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Akvc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
-  const [encrypt, setEncrypt] = useState({
+  const [input, setInput] = useState({
     plainText: "",
     key: "",
     cipherText: "",
   });
 
   const handleChange = (e) => {
-      setEncrypt({
-          ...encrypt, 
+      setInput({
+          ...input, 
           [e.target.name] : e.target.value
       });
   }
@@ -29,14 +29,14 @@ const Akvc = () => {
       },
       body: JSON.stringify({
         method : "encrypt",
-        plainText : encrypt.plainText,
-        key : encrypt.key,
+        plainText : input.plainText,
+        key : input.key,
       })
     })
-      .then(response => response.json()) // Mengubah response ke JSON
+      .then(response => response.json())
       .then(data => {
-        setEncrypt({
-          ...encrypt,
+        setInput({
+          ...input,
           plainText : "",
           key: "",
           cipherText: data.cipherText,
@@ -53,14 +53,14 @@ const Akvc = () => {
       },
       body: JSON.stringify({
         method : "decrypt",
-        cipherText : encrypt.cipherText,
-        key : encrypt.key,
+        cipherText : input.cipherText,
+        key : input.key,
       })
     })
-      .then(response => response.json()) // Mengubah response ke JSON
+      .then(response => response.json())
       .then(data => {
-        setEncrypt({
-          ...encrypt,
+        setInput({
+          ...input,
           cipherText : "",
           key: "",
           plainText : data.plainText,
@@ -77,7 +77,7 @@ const Akvc = () => {
 
   return (
     <div className="landing-container">
-      {console.log(encrypt.plainText)}
+      {console.log(input.plainText)}
       <SideBar ref={autokey}  isDarkmode={isDarkMode}/>
       {/* Main Content */}
       <div className="main-content" ref={autokey} style={{ backgroundColor : isDarkMode ? "#303030" : "#E8EAF6"}}>
@@ -98,12 +98,12 @@ const Akvc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-            <PlainTextField handler={handleChange} value={encrypt.plainText} encrypt={handleClickEncrypt}/>
+            <PlainTextField handler={handleChange} value={input.plainText} encrypt={handleClickEncrypt}/>
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
-              <KeyField handler={handleChange} value={encrypt.key}/>
+              <KeyField handler={handleChange} value={input.key}/>
             </div>
-            <ChipertextField value={encrypt.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
+            <ChipertextField value={input.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
           </div>
         </div>
       </div>

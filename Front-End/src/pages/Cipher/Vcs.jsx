@@ -1,6 +1,5 @@
 import "./Cipher.style.css";
 import { useRef, useState, useContext } from "react";
-import MoonIcon from "../../assets/ToggleOnly.png";
 import SideBar from "../../components/SideBar/SideBar";
 import ChipertextField from "../../components/TextField/CipherTextField";
 import PlainTextField from "../../components/TextField/PlainTextField";
@@ -9,6 +8,67 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Vcs = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [input, setInput] = useState({
+    plainText: "",
+    key: "",
+    cipherText: "",
+  });
+
+  const handleChange = (e) => {
+      setInput({
+          ...input, 
+          [e.target.name] : e.target.value
+      });
+  }
+
+  const handleClickEncrypt = () => {
+    fetch('http://localhost:8080/vigenereCipher', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        method : "encrypt",
+        plainText : input.plainText,
+        key : input.key,
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        setInput({
+          ...input,
+          plainText : "",
+          key: "",
+          cipherText: data.cipherText,
+      })
+      })
+      .catch(error => console.error('Terjadi kesalahan:', error));    
+  }
+
+  const handleClickDecrypt = () => {
+    fetch('http://localhost:8080/vigenereCipher', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        method : "decrypt",
+        cipherText : input.cipherText,
+        key : input.key,
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        setInput({
+          ...input,
+          cipherText : "",
+          key: "",
+          plainText : data.plainText,
+        })
+      })
+      .catch(error => console.error('Terjadi kesalahan:', error));
+  }
+
   const vigenere = useRef(null);
 
   const toggleDarkMode = () => {
@@ -37,12 +97,12 @@ const Vcs = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-            <PlainTextField />
+            <PlainTextField value={input.plainText} handler={handleChange} encrypt={handleClickEncrypt}/>
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
-              <KeyField />
+              <KeyField value={input.key} handler={handleChange}/>
             </div>
-            <ChipertextField />
+            <ChipertextField value={input.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
           </div>
         </div>
       </div>
