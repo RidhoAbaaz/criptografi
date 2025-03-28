@@ -3,7 +3,7 @@ import styles from "./TextField.module.css";
 import UploadButton from "../Button/UploadButton";
 import DownloadButton from "../Button/DownloadButton";
 
-export default function PlainTextField() {
+export default function PlainTextField({ handler, value, encrypt}) {
     const [selectedFormat, setSelectedFormat] = useState("text");
 
     return (
@@ -17,14 +17,14 @@ export default function PlainTextField() {
             </div>
             <hr />
 
-            <textarea className={styles.textInput} placeholder="Write plaintext here..." />
+            <textarea className={styles.textInput} placeholder="Write plaintext here..."  name="plainText" onChange={handler} value={value}/>
             <hr />
 
             <div className={styles.textFooter}>
                 <div className={styles.footerWrap}>
                     <UploadButton text="Upload File" icon="bi bi-paperclip" />
                 </div>
-                <DownloadButton text="Encrypt" icon="bi bi-lock" />
+                <DownloadButton text="Encrypt" icon="bi bi-lock" event={encrypt}/>
             </div>
         </div>
     );

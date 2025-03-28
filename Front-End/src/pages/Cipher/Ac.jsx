@@ -1,5 +1,5 @@
 import "./Cipher.style.css";
-import { useRef, useState, useContext } from "react";
+import { useRef, useContext } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import KeyField from "../../components/TextField/KeyField";

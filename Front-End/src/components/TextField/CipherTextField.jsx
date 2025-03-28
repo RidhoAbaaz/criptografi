@@ -3,7 +3,7 @@ import styles from "./TextField.module.css";
 import UploadButton from "../Button/UploadButton";
 import DownloadButton from "../Button/DownloadButton";
 
-export default function CipherTextField() {
+export default function CipherTextField({ handler, value, decrypt }) {
     const [selectedFormat, setSelectedFormat] = useState("text");
 
     return (
@@ -17,7 +17,7 @@ export default function CipherTextField() {
             </div>
             <hr />
 
-            <textarea className={styles.textInput} placeholder="Write ciphertext here..." />
+            <textarea className={styles.textInput} placeholder="Write ciphertext here..." name="cipherText" onChange={handler} value={value}/>
             <hr />
 
             <div className={styles.textFooter}>
@@ -25,7 +25,7 @@ export default function CipherTextField() {
                     <UploadButton text="Upload File" icon="bi bi-paperclip" />
                     <DownloadButton text="Download" icon="bi bi-download" />
                 </div>
-                <DownloadButton text="Decrypt" icon="bi bi-unlock" />
+                <DownloadButton text="Decrypt" icon="bi bi-unlock" event={decrypt}/>
             </div>
         </div>
     );
