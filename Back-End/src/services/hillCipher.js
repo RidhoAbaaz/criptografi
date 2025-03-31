@@ -4,12 +4,13 @@ function mod(n, m) {
 
 // Mengonversi huruf ke angka (A=0, B=1, ..., Z=25)
 function charToNum(c) {
-    return c.charCodeAt(0) - 'A'.charCodeAt(0);
+    return c.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0);
 }
 
-// Mengonversi angka ke huruf
-function numToChar(n) {
-    return String.fromCharCode(n + 'A'.charCodeAt(0));
+// Mengonversi angka ke huruf, mempertahankan kapitalisasi
+function numToChar(n, isUpperCase) {
+    let char = String.fromCharCode(n + 'A'.charCodeAt(0));
+    return isUpperCase ? char : char.toLowerCase();
 }
 
 // Mengubah string kunci menjadi matriks sesuai ukuran
@@ -86,16 +87,19 @@ function hillEncrypt(plainText, key) {
     let keyMatrix = keyToMatrix(key);
     let size = keyMatrix.length;
 
-    plainText = plainText.toUpperCase().replace(/[^A-Z]/g, '');
-    while (plainText.length % size !== 0) {
-        plainText += 'X';
+    let formattedText = plainText.replace(/[^a-zA-Z]/g, '');
+    while (formattedText.length % size !== 0) {
+        formattedText += 'X';
     }
 
     let cipherText = '';
-    for (let i = 0; i < plainText.length; i += size) {
-        let block = plainText.slice(i, i + size).split('').map(charToNum);
-        let encryptedBlock = multiplyMatrixVector(keyMatrix, block);
-        cipherText += encryptedBlock.map(numToChar).join('');
+    for (let i = 0; i < formattedText.length; i += size) {
+        let block = formattedText.slice(i, i + size).split('').map(char => ({
+            num: charToNum(char),
+            isUpperCase: char === char.toUpperCase()
+        }));
+        let encryptedBlock = multiplyMatrixVector(keyMatrix, block.map(b => b.num));
+        cipherText += encryptedBlock.map((num, idx) => numToChar(num, block[idx].isUpperCase)).join('');
     }
 
     return cipherText;
@@ -109,9 +113,12 @@ function hillDecrypt(cipherText, key) {
 
     let plainText = '';
     for (let i = 0; i < cipherText.length; i += size) {
-        let block = cipherText.slice(i, i + size).split('').map(charToNum);
-        let decryptedBlock = multiplyMatrixVector(inverseKey, block);
-        plainText += decryptedBlock.map(numToChar).join('');
+        let block = cipherText.slice(i, i + size).split('').map(char => ({
+            num: charToNum(char),
+            isUpperCase: char === char.toUpperCase()
+        }));
+        let decryptedBlock = multiplyMatrixVector(inverseKey, block.map(b => b.num));
+        plainText += decryptedBlock.map((num, idx) => numToChar(num, block[idx].isUpperCase)).join('');
     }
 
     return plainText;

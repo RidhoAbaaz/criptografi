@@ -8,6 +8,9 @@ const init = async () => {
         routes: {
             cors: {
                 origin: ["*"]
+            },
+            payload: {
+                maxBytes: 10485760, // 10MB limit
             }
         },
     });

@@ -50,12 +50,13 @@ function prepareText(text) {
 
 function playfairCipher(text, key, encrypt = true) {
     let matrix = generatePlayfairMatrix(key);
-    let preparedText = prepareText(text);
+    // Use preparedText for encryption only; for decryption, use text directly.
+    let processedText = encrypt ? prepareText(text) : text;
     let result = "";
 
-    for (let i = 0; i < preparedText.length; i += 2) {
-        let [r1, c1] = findPosition(matrix, preparedText[i]);
-        let [r2, c2] = findPosition(matrix, preparedText[i + 1]);
+    for (let i = 0; i < processedText.length; i += 2) {
+        let [r1, c1] = findPosition(matrix, processedText[i]);
+        let [r2, c2] = findPosition(matrix, processedText[i + 1]);
 
         if (r1 === r2) {
             c1 = (c1 + (encrypt ? 1 : 4)) % 5;
