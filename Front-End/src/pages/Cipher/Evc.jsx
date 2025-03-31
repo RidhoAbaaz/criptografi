@@ -9,6 +9,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Evc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [selectedFormat, setSelectedFormat] = useState("text");
   const [input, setInput] = useState({
     plainText: "",
     key: "",
@@ -23,52 +24,131 @@ const Evc = () => {
   }
 
   const handleClickEncrypt = () => {
-    fetch('http://localhost:8080/extendedVigenere', {
-      method: 'POST',
+    if (!input.plainText.trim()) {
+      console.error("Plain text tidak boleh kosong.");
+      alert("Plain text cannot be empty");
+      return;
+    }
+  
+    if (!input.key.trim()) {
+      console.error("Kunci tidak boleh kosong.");
+      alert("Key cannot be empty");
+      return;
+    }
+
+    if (!/^[\x00-\xFF]*$/.test(input.key)) {
+      console.error("Kunci hanya boleh berisi karakter ASCII hingga 255.");
+      alert("Key must contain only ASCII characters (0-255)");
+      return;
+    }
+
+    const isBinary = selectedFormat === "binary";
+    const plainText = isBinary
+      ? new Uint8Array(input.plainText.split(" ").map(Number)) // Konversi ke Uint8Array jika biner
+      : input.plainText;
+  
+    // Log tipe data dan nilai plainText
+    console.log("Tipe data plainText:", isBinary ? "Uint8Array" : typeof plainText);
+    console.log("Isi plainText:", isBinary ? Array.from(plainText) : plainText);
+  
+    fetch("http://localhost:8080/extendedVigenere", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        method : "encrypt",
-        plainText : input.plainText,
-        key : input.key,
-      })
+        method: "encrypt",
+        plainText: isBinary ? Array.from(plainText) : plainText, // Kirim array byte jika biner
+        key: input.key,
+        format: selectedFormat, // Kirim format ke server
+      }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data.cipherText) {
+          console.error("Server response does not contain cipherText:", data);
+          return;
+        }
+  
         setInput({
           ...input,
-          plainText : "",
+          plainText: "",
           key: "",
-          cipherText: data.cipherText,
+          cipherText: isBinary
+            ? Array.isArray(data.cipherText)
+              ? data.cipherText.join(" ") // Gabungkan array byte menjadi string angka
+              : data.cipherText
+            : data.cipherText,
+        });
       })
-      })
-      .catch(error => console.error('Terjadi kesalahan:', error));    
-  }
+      .catch((error) => console.error("Terjadi kesalahan:", error));
+  };
 
   const handleClickDecrypt = () => {
-    fetch('http://localhost:8080/extendedVigenere', {
-      method: 'POST',
+    if (!input.cipherText.trim()) {
+      console.error("Cipher text tidak boleh kosong.");
+      alert("Cipher text cannot be empty");
+      return;
+    }
+
+    console.log("Input cipherText:", input.cipherText); // Log di sini
+  
+    if (!input.key.trim()) {
+      console.error("Kunci tidak boleh kosong.");
+      alert("Key cannot be empty");
+      return;
+    }
+
+    if (!/^[\x00-\xFF]*$/.test(input.key)) {
+      console.error("Kunci hanya boleh berisi karakter ASCII hingga 255.");
+      alert("Key must contain only ASCII characters (0-255)");
+      return;
+    }
+
+    const isBinary = selectedFormat === "binary";
+    const cipherText = isBinary
+      ? new Uint8Array(input.cipherText.split(" ").map(Number)) // Convert to Uint8Array if binary
+      : input.cipherText;
+
+    console.log("Converted cipherText:", cipherText); // Log di sini
+  
+    // Log data type and value of cipherText
+    console.log("Tipe data cipherText:", isBinary ? "Uint8Array" : typeof cipherText);
+    console.log("Isi cipherText:", isBinary ? Array.from(cipherText) : cipherText);
+  
+    fetch("http://localhost:8080/extendedVigenere", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        method : "decrypt",
-        cipherText : input.cipherText,
-        key : input.key,
-      })
+        method: "decrypt",
+        cipherText: isBinary ? Array.from(cipherText) : cipherText, // Send array byte if binary
+        key: input.key,
+        format: selectedFormat, // Send format to server
+      }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
+
+        if (!data.plainText) {
+          console.error("Server response does not contain plainText:", data);
+          return;
+        }
+  
         setInput({
           ...input,
-          cipherText : "",
+          cipherText: "",
           key: "",
-          plainText : data.plainText,
-        })
+          plainText: isBinary
+            ? Array.isArray(data.plainText)
+              ? data.plainText.join(" ") // Join byte array into a string of numbers
+              : data.plainText
+            : data.plainText,
+        });
       })
-      .catch(error => console.error('Terjadi kesalahan:', error));
-  }
+      .catch((error) => console.error("Terjadi kesalahan:", error));
+  };
 
   const extended = useRef(null);
 
@@ -98,12 +178,24 @@ const Evc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-            <PlainTextField value={input.plainText} handler={handleChange} encrypt={handleClickEncrypt}/>
+          <PlainTextField 
+            value={input.plainText} 
+            handler={handleChange} 
+            encrypt={handleClickEncrypt} 
+            selectedFormat={selectedFormat} 
+            setSelectedFormat={setSelectedFormat} 
+          />
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <KeyField value={input.key} handler={handleChange}/>
             </div>
-            <CipherTextField value={input.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
+            <CipherTextField 
+              value={input.cipherText} 
+              handler={handleChange} 
+              decrypt={handleClickDecrypt}
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Pc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [selectedFormat, setSelectedFormat] = useState("text");
   const [input, setInput] = useState({
     plainText: "",
     key: "",
@@ -23,6 +24,24 @@ const Pc = () => {
   }
 
   const handleClickEncrypt = () => {
+    if (!input.plainText.trim()) {
+      console.error("Plain text tidak boleh kosong.");
+      alert("Plain text cannot be empty");
+      return;
+    }
+  
+    if (!input.key.trim()) {
+      console.error("Kunci tidak boleh kosong.");
+      alert("Key cannot be empty");
+      return;
+    }
+
+    if (!/^[a-zA-Z]+$/.test(input.key)) {
+      console.error("Kunci hanya boleh mengandung huruf alfabet.");
+      alert("Key must only contain alphabetic characters (A-Z or a-z)");
+      return;
+    }
+
     fetch('http://localhost:8080/playFairCipher', {
       method: 'POST',
       headers: {
@@ -47,6 +66,24 @@ const Pc = () => {
   }
 
   const handleClickDecrypt = () => {
+    if (!input.cipherText.trim()) {
+      console.error("Cipher text tidak boleh kosong.");
+      alert("Cipher text cannot be empty");
+      return;
+    }
+  
+    if (!input.key.trim()) {
+      console.error("Kunci tidak boleh kosong.");
+      alert("Key cannot be empty");
+      return;
+    }
+
+    if (!/^[a-zA-Z]+$/.test(input.key)) {
+      console.error("Kunci hanya boleh mengandung huruf alfabet.");
+      alert("Key must only contain alphabetic characters (A-Z or a-z)");
+      return;
+    }
+    
     fetch('http://localhost:8080/playFairCipher', {
       method: 'POST',
       headers: {
@@ -97,12 +134,24 @@ const Pc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-            <PlainTextField value={input.plainText} handler={handleChange} encrypt={handleClickEncrypt}/>
+          <PlainTextField 
+            value={input.plainText} 
+            handler={handleChange} 
+            encrypt={handleClickEncrypt} 
+            selectedFormat={selectedFormat} 
+            setSelectedFormat={setSelectedFormat} 
+          />
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <KeyField value={input.key} handler={handleChange}/>
             </div>
-            <ChipertextField value={input.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
+            <ChipertextField 
+              value={input.cipherText} 
+              handler={handleChange} 
+              decrypt={handleClickDecrypt}
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
           </div>
         </div>
       </div>
