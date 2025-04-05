@@ -162,7 +162,7 @@ const Evc = () => {
       {/* Main Content */}
       <div className="main-content" ref={extended} style={{ backgroundColor : isDarkMode ? "#303030" : "#E8EAF6"}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
-          <h1 className="navbar-title">ChiperVault</h1>
+          <h1 className="navbar-title">CipherVault</h1>
           <div className={`${"toggle-darkmode"} ${isDarkMode ? "toggle-darkmode-t" : "toggle-darkmode-f"}`} onClick={toggleDarkMode}>
             <span>Night Mode</span>
             <div className="slider" style={{ backgroundColor: isDarkMode ? "#3F51B5" : "#8590cf" }}>

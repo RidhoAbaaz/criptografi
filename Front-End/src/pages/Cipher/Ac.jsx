@@ -8,6 +8,7 @@ import { ThemeContext } from "../../context/ThemeContext";
 
 const Ac = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [selectedFormat, setSelectedFormat] = useState("text");
     const [input, setInput] = useState({
       plainText: "",
       multiplicationKey: "",
@@ -23,6 +24,23 @@ const Ac = () => {
     }
   
     const handleClickEncrypt = () => {
+      if (!input.plainText) {
+        alert("Plaintext cannot be empty.");
+        return;
+      }
+      if (!input.multiplicationKey || isNaN(input.multiplicationKey) || Number(input.multiplicationKey) <= 0) {
+        alert("Key m must be a positive integer.");
+        return;
+      }
+      if (Number(input.multiplicationKey) % 2 === 0 || Number(input.multiplicationKey) % 13 === 0) {
+        alert("Key m must be coprime with 26.");
+        return;
+      }
+      if (!input.additionKey || isNaN(input.additionKey)) {
+        alert("Key b must be an integer.");
+        return;
+      }
+      
       fetch('http://localhost:8080/affineCipher', {
         method: 'POST',
         headers: {
@@ -49,6 +67,23 @@ const Ac = () => {
     }
   
     const handleClickDecrypt = () => {
+      if (!input.cipherText) {
+        alert("Ciphertext cannot be empty.");
+        return;
+      }
+      if (!input.multiplicationKey || isNaN(input.multiplicationKey) || Number(input.multiplicationKey) <= 0) {
+        alert("Key m must be a positive integer.");
+        return;
+      }
+      if (Number(input.multiplicationKey) % 2 === 0 || Number(input.multiplicationKey) % 13 === 0) {
+        alert("Key m must be coprime with 26.");
+        return;
+      }
+      if (!input.additionKey || isNaN(input.additionKey)) {
+        alert("Key b must be an integer.");
+        return;
+      }
+
       fetch('http://localhost:8080/affineCipher', {
         method: 'POST',
         headers: {
@@ -86,7 +121,7 @@ const Ac = () => {
       {/* Main Content */}
       <div className="main-content" ref={affinePage} style={{ backgroundColor : isDarkMode ? "#303030" : "#E8EAF6"}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
-          <h1 className="navbar-title">ChiperVault</h1>
+          <h1 className="navbar-title">CipherVault</h1>
           <div className={`${"toggle-darkmode"} ${isDarkMode ? "toggle-darkmode-t" : "toggle-darkmode-f"}`} onClick={toggleDarkMode}>
             <span>Night Mode</span>
             <div className="slider" style={{ backgroundColor: isDarkMode ? "#3F51B5" : "#8590cf" }}>
@@ -99,7 +134,13 @@ const Ac = () => {
         </div>
         <div className="chiper">
           <div className="chiper-grid">
-            <PlainTextField value={input.plainText} handler={handleChange} encrypt={handleClickEncrypt}/>
+          <PlainTextField 
+            value={input.plainText} 
+            handler={handleChange} 
+            encrypt={handleClickEncrypt} 
+            selectedFormat={selectedFormat} 
+            setSelectedFormat={setSelectedFormat} 
+          />
             <div className="affine-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <div className="chiper-key">
@@ -117,7 +158,13 @@ const Ac = () => {
                 <p>Note : <br /> Key b can be any integer (positive/negative) for letter shifting</p>
               </div>
             </div>
-            <CipherTextField value={input.cipherText} handler={handleChange} decrypt={handleClickDecrypt}/>
+            <CipherTextField
+              value={input.cipherText} 
+              handler={handleChange} 
+              decrypt={handleClickDecrypt}
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
           </div>
         </div>
       </div>

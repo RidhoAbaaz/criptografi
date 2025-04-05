@@ -118,7 +118,7 @@ const Akvc = () => {
       {/* Main Content */}
       <div className="main-content" ref={autokey} style={{ backgroundColor : isDarkMode ? "#303030" : "#E8EAF6"}}>
         <div className="navbar"  style={{ backgroundColor : isDarkMode ? "#3F51B5" : undefined}}>
-          <h1 className="navbar-title">ChiperVault</h1>
+          <h1 className="navbar-title">CipherVault</h1>
           <div className={`${"toggle-darkmode"} ${isDarkMode ? "toggle-darkmode-t" : "toggle-darkmode-f"}`} onClick={toggleDarkMode}>
             <span>Night Mode</span>
             <div className="slider" style={{ backgroundColor: isDarkMode ? "#3F51B5" : "#8590cf" }}>
@@ -128,7 +128,7 @@ const Akvc = () => {
         </div>
         <div className="content" style={{ backgroundColor : isDarkMode ? "#282828" : undefined }}>
           <div className="content-title">
-            <h2>Auto key Vigenere Cipher</h2>
+            <h2>Auto-Key Vigenere Cipher</h2>
           </div>
         </div>
 

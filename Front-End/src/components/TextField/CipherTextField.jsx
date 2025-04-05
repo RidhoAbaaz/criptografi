@@ -16,7 +16,7 @@ export default function CipherTextField({ handler, value, decrypt,  selectedForm
     return (
         <div className={styles.textField}>
             <div className={styles.textTitle}>
-                <h2>Ciphertext</h2>
+                <h2>CipherText</h2>
                 <select value={selectedFormat} onChange={(e) => setSelectedFormat(e.target.value)}>
                     <option value="text">Text</option>
                     {isEvcPath && <option value="binary">Binary</option>}
