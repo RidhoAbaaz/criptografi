@@ -20,7 +20,7 @@ function modInverse(a, m) {
 
 // Fungsi untuk memformat teks cipher dalam bentuk tanpa spasi dan kelompok 5 huruf
 function formatCipherText(text) {
-    return text.replace(/\s+/g, '').match(/.{1,5}/g).join(' ');
+    return text.replace(/\s+/g, '');
 }
 
 // Fungsi untuk mengenkripsi teks menggunakan Affine Cipher

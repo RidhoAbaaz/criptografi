@@ -1,127 +1,137 @@
-function mod(n, m) {
-    return ((n % m) + m) % m;
+function parseKey(keyString) {
+    return JSON.parse(keyString);
 }
 
-// Mengonversi huruf ke angka (A=0, B=1, ..., Z=25)
-function charToNum(c) {
-    return c.toUpperCase().charCodeAt(0) - 'A'.charCodeAt(0);
+function charToNum(char) {
+    return char.charCodeAt(0) - 65; // 'A' = 0, ..., 'Z' = 25
 }
 
-// Mengonversi angka ke huruf, mempertahankan kapitalisasi
-function numToChar(n, isUpperCase) {
-    let char = String.fromCharCode(n + 'A'.charCodeAt(0));
-    return isUpperCase ? char : char.toLowerCase();
+function numToChar(num) {
+    return String.fromCharCode((num % 26 + 26) % 26 + 65);
 }
 
-// Mengubah string kunci menjadi matriks sesuai ukuran
-function keyToMatrix(key) {
-    key = key.toUpperCase().replace(/[^A-Z]/g, '');
-    let size = Math.sqrt(key.length);
-    if (size % 1 !== 0) {
-        throw new Error("Panjang kunci harus merupakan kuadrat sempurna (4, 9, 16, dst.).");
-    }
-    
-    let matrix = [];
-    for (let i = 0; i < size; i++) {
-        matrix.push(key.slice(i * size, (i + 1) * size).split('').map(charToNum));
-    }
-    return matrix;
-}
+function textToVector(text, n) {
+    let charData = [];
+    let vector = [];
 
-// Perkalian matriks dengan vektor
-function multiplyMatrixVector(matrix, vector) {
-    return matrix.map(row => mod(row.reduce((sum, val, i) => sum + val * vector[i], 0), 26));
-}
-
-// Mencari determinan matriks
-function determinant(matrix) {
-    let size = matrix.length;
-    if (size === 2) {
-        return mod(matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0], 26);
-    }
-
-    let det = 0;
-    for (let i = 0; i < size; i++) {
-        let subMatrix = matrix.slice(1).map(row => row.filter((_, j) => j !== i));
-        det += (i % 2 === 0 ? 1 : -1) * matrix[0][i] * determinant(subMatrix);
-    }
-    return mod(det, 26);
-}
-
-// Mencari invers modulo 26
-function modInverse(a, m) {
-    for (let i = 1; i < m; i++) {
-        if ((a * i) % m === 1) return i;
-    }
-    return -1;
-}
-
-// Mencari invers matriks
-function matrixInverse(matrix) {
-    let size = matrix.length;
-    let det = determinant(matrix);
-    let detInv = modInverse(det, 26);
-    if (detInv === -1) throw new Error("Matriks kunci tidak memiliki invers.");
-
-    if (size === 2) {
-        return [
-            [mod(matrix[1][1] * detInv, 26), mod(-matrix[0][1] * detInv, 26)],
-            [mod(-matrix[1][0] * detInv, 26), mod(matrix[0][0] * detInv, 26)]
-        ];
-    }
-
-    let adj = Array(size).fill(0).map(() => Array(size).fill(0));
-    for (let i = 0; i < size; i++) {
-        for (let j = 0; j < size; j++) {
-            let subMatrix = matrix.filter((_, row) => row !== i).map(row => row.filter((_, col) => col !== j));
-            let cofactor = determinant(subMatrix);
-            adj[j][i] = mod((i + j) % 2 === 0 ? cofactor : -cofactor, 26);
+    for (let char of text.toUpperCase()) {
+        if (char >= 'A' && char <= 'Z') {
+            charData.push(char);
+            vector.push(charToNum(char));
         }
     }
 
-    return adj.map(row => row.map(val => mod(val * detInv, 26)));
+    while (vector.length % n !== 0) {
+        vector.push(charToNum('X')); // Padding dengan 'X'
+        charData.push('X');
+    }
+
+    return { vector, charData };
 }
 
-// Enkripsi Hill Cipher
-function hillEncrypt(plainText, key) {
-    let keyMatrix = keyToMatrix(key);
-    let size = keyMatrix.length;
-
-    let formattedText = plainText.replace(/[^a-zA-Z]/g, '');
-    while (formattedText.length % size !== 0) {
-        formattedText += 'X';
-    }
-
-    let cipherText = '';
-    for (let i = 0; i < formattedText.length; i += size) {
-        let block = formattedText.slice(i, i + size).split('').map(char => ({
-            num: charToNum(char),
-            isUpperCase: char === char.toUpperCase()
-        }));
-        let encryptedBlock = multiplyMatrixVector(keyMatrix, block.map(b => b.num));
-        cipherText += encryptedBlock.map((num, idx) => numToChar(num, block[idx].isUpperCase)).join('');
-    }
-
-    return cipherText;
+function vectorToText(vector, charData) {
+    return vector.map((num) => numToChar(num)).join("");
 }
 
-// Dekripsi Hill Cipher
-function hillDecrypt(cipherText, key) {
-    let keyMatrix = keyToMatrix(key);
-    let size = keyMatrix.length;
-    let inverseKey = matrixInverse(keyMatrix);
+function matrixMultiply(A, B, mod) {
+    let result = Array(A.length)
+        .fill(0)
+        .map(() => Array(B[0].length).fill(0));
 
-    let plainText = '';
-    for (let i = 0; i < cipherText.length; i += size) {
-        let block = cipherText.slice(i, i + size).split('').map(char => ({
-            num: charToNum(char),
-            isUpperCase: char === char.toUpperCase()
-        }));
-        let decryptedBlock = multiplyMatrixVector(inverseKey, block.map(b => b.num));
-        plainText += decryptedBlock.map((num, idx) => numToChar(num, block[idx].isUpperCase)).join('');
+    for (let i = 0; i < A.length; i++) {
+        for (let j = 0; j < B[0].length; j++) {
+            for (let k = 0; k < A[0].length; k++) {
+                result[i][j] += A[i][k] * B[k][j];
+            }
+            result[i][j] = (result[i][j] % mod + mod) % mod;
+        }
+    }
+    return result;
+}
+
+function modInverse(n, mod) {
+    for (let x = 1; x < mod; x++) {
+        if ((n * x) % mod === 1) return x;
+    }
+    return null;
+}
+
+function matrixModInverse(matrix, mod) {
+    let size = matrix.length;
+    let identity = Array(size)
+        .fill(0)
+        .map((_, i) =>
+            Array(size)
+                .fill(0)
+                .map((_, j) => (i === j ? 1 : 0))
+        );
+
+    let augmented = matrix.map((row, i) => [...row, ...identity[i]]);
+
+    for (let i = 0; i < size; i++) {
+        let pivot = augmented[i][i];
+        let pivotInv = modInverse(pivot, mod);
+        if (pivotInv === null) {
+            let swapped = false;
+            for (let r = i + 1; r < size; r++) {
+                pivot = augmented[r][i];
+                pivotInv = modInverse(pivot, mod);
+                if (pivotInv !== null) {
+                    [augmented[i], augmented[r]] = [augmented[r], augmented[i]];
+                    swapped = true;
+                    break;
+                }
+            }
+            if (!swapped) throw new Error("Key tidak memiliki invers modular!");
+        }
+
+        for (let j = 0; j < size * 2; j++) {
+            augmented[i][j] = (augmented[i][j] * pivotInv) % mod;
+            if (augmented[i][j] < 0) augmented[i][j] += mod;
+        }
+
+        for (let k = 0; k < size; k++) {
+            if (k === i) continue;
+            let factor = augmented[k][i];
+            for (let j = 0; j < size * 2; j++) {
+                augmented[k][j] = (augmented[k][j] - factor * augmented[i][j]) % mod;
+                if (augmented[k][j] < 0) augmented[k][j] += mod;
+            }
+        }
     }
 
-    return plainText;
+    return augmented.map(row => row.slice(size));
+}
+
+function hillEncrypt(plainText, keyString) {
+    let keyMatrix = parseKey(keyString);
+    let n = keyMatrix.length;
+    let { vector, charData } = textToVector(plainText, n);
+    let encryptedVector = [];
+
+    for (let i = 0; i < vector.length; i += n) {
+        let block = vector.slice(i, i + n).map((x) => [x]);
+        let encryptedBlock = matrixMultiply(keyMatrix, block, 26); // sebelumnya 95
+        encryptedVector.push(...encryptedBlock.flat());
+    }
+
+    return vectorToText(encryptedVector, charData);
+}
+
+function hillDecrypt(cipherText, keyString) {
+    let keyMatrix = parseKey(keyString);
+    let n = keyMatrix.length;
+    let { vector, charData } = textToVector(cipherText, n);
+    let keyInv = matrixModInverse(keyMatrix, 26); // sebelumnya 95
+    let decryptedVector = [];
+
+    for (let i = 0; i < vector.length; i += n) {
+        let block = vector.slice(i, i + n).map((x) => [x]);
+        let decryptedBlock = matrixMultiply(keyInv, block, 26);
+        decryptedVector.push(...decryptedBlock.flat());
+    }
+
+    return vectorToText(decryptedVector, charData);
 }
 
 module.exports = { hillEncrypt, hillDecrypt };
