@@ -5,27 +5,25 @@ const indexToChar = (index) => {
 };
 
 const encryptAutokeyVigenere = (plaintext, key) => {
-    let ciphertext = "";
-    key = key.replace(/[^a-zA-Z]/g, "").toUpperCase(); // hanya huruf, jadi kapital
-    let keyIndex = 0;
-    let fullKey = key;
+    plaintext = plaintext.toUpperCase().replace(/[^A-Z]/g, '');
+    key = key.toUpperCase().replace(/[^A-Z]/g, '');
+    let ciphertext = '';
+
+    const newPlainText = plaintext.slice(0, -key.length)
+    let fullKey = key + newPlainText;
 
     for (let i = 0; i < plaintext.length; i++) {
-        let char = plaintext[i];
-
-        if (char.match(/[a-zA-Z]/)) {
-            let p = charToIndex(char);
-            let k = charToIndex(fullKey[keyIndex]);
-            let c = (p + k) % 26;
-            
-            ciphertext += indexToChar(c);
-            fullKey += indexToChar(p); // tambahkan huruf plaintext kapital ke fullKey
-            keyIndex++;
-        }
+        let p = charToIndex(plaintext[i]);
+        let k = charToIndex(fullKey[i]);
+        let c = (p + k) % 26;
+        
+        ciphertext += indexToChar(c);
     }
 
+    console.log(fullKey);
+
     return ciphertext;
-};
+}
 
 const decryptAutokeyVigenere = (ciphertext, key) => {
     let plaintext = "";

@@ -1,14 +1,15 @@
 import "./Cipher.style.css";
-import { useRef, useState, useContext } from "react";
-import MoonIcon from "../../assets/ToggleOnly.png";
+import { useRef, useState, useContext, useEffect } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import ChipertextField from "../../components/TextField/CipherTextField";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import KeyField from "../../components/TextField/KeyField";
 import { ThemeContext } from "../../context/ThemeContext";
+import FieldOutput from "../../components/FieldOutput/FieldOutput";
 
 const Pc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [ isChecked, setIsChecked ] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("text");
   const [input, setInput] = useState({
     plainText: "",
@@ -61,6 +62,7 @@ const Pc = () => {
           key: "",
           cipherText: data.cipherText,
       })
+      setIsChecked(true);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));    
   }
@@ -103,6 +105,7 @@ const Pc = () => {
           key: "",
           plainText : data.plainText,
         })
+        setIsChecked(false);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));
   }
@@ -111,6 +114,28 @@ const Pc = () => {
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
+
+    useEffect(() => {
+      if (isChecked) {
+        let formattedText = "";
+        for (let i = 0; i < input.cipherText.length; i++) {
+          if (i % 5 === 0 && i !== 0) {
+            formattedText += " ";
+          }
+          formattedText += input.cipherText[i];
+        }
+        console.log("isi formated text",formattedText)
+        setInput({
+          ...input,
+          cipherText: formattedText,
+        });
+      } else {
+        setInput({
+          ...input,
+          cipherText: input.cipherText.replace(/\s+/g, '')
+        })
+      }
+    }, [isChecked]);
 
   return (
     <div className="landing-container">
@@ -152,6 +177,7 @@ const Pc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked} />
           </div>
         </div>
       </div>

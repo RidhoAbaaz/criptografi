@@ -6,9 +6,11 @@ import SideBar from "../../components/SideBar/SideBar";
 import ChipertextField from "../../components/TextField/CipherTextField";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import { ThemeContext } from "../../context/ThemeContext";
+import FieldOutput from "../../components/FieldOutput/FieldOutput";
 
 const Hc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [ isChecked, setIsChecked ] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("text");
   const [input, setInput] = useState({
     plainText: "",
@@ -86,6 +88,7 @@ const Hc = () => {
           cipherText: data.cipherText,
         });
         clearMatrixValues();
+        setIsChecked(true);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -128,6 +131,7 @@ const Hc = () => {
           plainText: data.plainText,
         });
         clearMatrixValues();
+        setIsChecked(false);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -176,6 +180,28 @@ const Hc = () => {
   };
 
   const hasEmptyCell = matrixValues.some(row => row.some(cell => cell === ""));
+
+  useEffect(() => {
+    if (isChecked) {
+      let formattedText = "";
+      for (let i = 0; i < input.cipherText.length; i++) {
+        if (i % 5 === 0 && i !== 0) {
+          formattedText += " ";
+        }
+        formattedText += input.cipherText[i];
+      }
+      console.log("isi formated text",formattedText)
+      setInput({
+        ...input,
+        cipherText: formattedText,
+      });
+    } else {
+      setInput({
+        ...input,
+        cipherText: input.cipherText.replace(/\s+/g, '')
+      })
+    }
+  }, [isChecked])
 
   return (
     <div
@@ -335,6 +361,7 @@ const Hc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked} />
           </div>
         </div>
       </div>

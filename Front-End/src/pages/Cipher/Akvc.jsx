@@ -1,13 +1,15 @@
 import "./Cipher.style.css";
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext, useState, useEffect } from "react";
 import ChipertextField from "../../components/TextField/CipherTextField";
 import PlainTextField from "../../components/TextField/PlainTextField";
 import SideBar from "../../components/SideBar/SideBar";
 import KeyField from "../../components/TextField/KeyField";
 import { ThemeContext } from "../../context/ThemeContext";
+import FieldOutput from "../../components/FieldOutput/FieldOutput";
 
 const Akvc = () => {
   const { isDarkMode, setDarkMode } = useContext(ThemeContext);
+  const [ isChecked, setIsChecked ] = useState(false);
   const [selectedFormat, setSelectedFormat] = useState("text");
   const [input, setInput] = useState({
     plainText: "",
@@ -60,6 +62,7 @@ const Akvc = () => {
           key: "",
           cipherText: data.cipherText,
       })
+        setIsChecked(true);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));    
   }
@@ -101,6 +104,8 @@ const Akvc = () => {
           key: "",
           plainText : data.plainText,
         })
+
+        setIsChecked(false);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));
   }
@@ -110,6 +115,28 @@ const Akvc = () => {
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
+
+    useEffect(() => {
+      if (isChecked) {
+        let formattedText = "";
+        for (let i = 0; i < input.cipherText.length; i++) {
+          if (i % 5 === 0 && i !== 0) {
+            formattedText += " ";
+          }
+          formattedText += input.cipherText[i];
+        }
+        console.log("isi formated text",formattedText)
+        setInput({
+          ...input,
+          cipherText: formattedText,
+        });
+      } else {
+        setInput({
+          ...input,
+          cipherText: input.cipherText.replace(/\s+/g, '')
+        })
+      }
+    }, [isChecked]);
 
   return (
     <div className="landing-container">
@@ -152,6 +179,7 @@ const Akvc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
+            <FieldOutput setIsSelected={setIsChecked} isSelected={isChecked} />
           </div>
         </div>
       </div>
