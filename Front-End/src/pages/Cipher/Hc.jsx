@@ -81,6 +81,17 @@ const Hc = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        if (isChecked) {
+          let formattedText = "";
+          for (let i = 0; i < data.cipherText.length; i++) {
+            if (i % 5 === 0 && i !== 0) {
+              formattedText += " ";
+            }
+            formattedText += data.cipherText[i];
+          }
+          console.log("isi formated text",formattedText)
+          data.cipherText = formattedText;
+        }
         setInput({
           ...input,
           plainText: "",
@@ -88,7 +99,6 @@ const Hc = () => {
           cipherText: data.cipherText,
         });
         clearMatrixValues();
-        setIsChecked(true);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -131,7 +141,6 @@ const Hc = () => {
           plainText: data.plainText,
         });
         clearMatrixValues();
-        setIsChecked(false);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -180,28 +189,6 @@ const Hc = () => {
   };
 
   const hasEmptyCell = matrixValues.some(row => row.some(cell => cell === ""));
-
-  useEffect(() => {
-    if (isChecked) {
-      let formattedText = "";
-      for (let i = 0; i < input.cipherText.length; i++) {
-        if (i % 5 === 0 && i !== 0) {
-          formattedText += " ";
-        }
-        formattedText += input.cipherText[i];
-      }
-      console.log("isi formated text",formattedText)
-      setInput({
-        ...input,
-        cipherText: formattedText,
-      });
-    } else {
-      setInput({
-        ...input,
-        cipherText: input.cipherText.replace(/\s+/g, '')
-      })
-    }
-  }, [isChecked])
 
   return (
     <div
@@ -252,6 +239,7 @@ const Hc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
+          <div className="plaintext-wrapper">
             <PlainTextField 
               value={input.plainText} 
               handler={handleChange} 
@@ -259,7 +247,9 @@ const Hc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
-            <div className="flex-container">
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked}/>
+          </div>
+            <div className="flex-container small-gap">
               <h1 className="icon-arrow">&#8596;</h1>
               <div
                 style={{
@@ -267,7 +257,8 @@ const Hc = () => {
                   borderRadius: "8px",
                   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
                   border: "1px solid #989898",
-                  aspectRatio: "1 / 1",
+                  maxWidth: "241px",
+                  maxHeight: "243px",
                 }}
               >
                 <div
@@ -300,7 +291,7 @@ const Hc = () => {
                 {/* Grid untuk input matriks */}
                 <div
                   style={{
-                    height: "196px",
+                    height: "195px",
                     width: "240px",
                     overflow: "auto",
                   }}
@@ -309,6 +300,7 @@ const Hc = () => {
                     style={{
                       paddingTop: "4px",
                       paddingLeft: "4px",
+                      paddingRight: "4px",
                       paddingBottom: "4px",
                       display: "grid",
                       gridTemplateColumns: `repeat(${matrixSize}, minmax(40px, 1fr))`,
@@ -361,7 +353,6 @@ const Hc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
-            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked} />
           </div>
         </div>
       </div>

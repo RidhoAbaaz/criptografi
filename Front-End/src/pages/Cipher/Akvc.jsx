@@ -56,13 +56,23 @@ const Akvc = () => {
     })
       .then(response => response.json())
       .then(data => {
+        if (isChecked) {
+          let formattedText = "";
+          for (let i = 0; i < data.cipherText.length; i++) {
+            if (i % 5 === 0 && i !== 0) {
+              formattedText += " ";
+            }
+            formattedText += data.cipherText[i];
+          }
+          console.log("isi formated text",formattedText)
+          data.cipherText = formattedText;
+        }
         setInput({
           ...input,
           plainText : "",
           key: "",
           cipherText: data.cipherText,
       })
-        setIsChecked(true);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));    
   }
@@ -104,8 +114,6 @@ const Akvc = () => {
           key: "",
           plainText : data.plainText,
         })
-
-        setIsChecked(false);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));
   }
@@ -115,28 +123,6 @@ const Akvc = () => {
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
-
-    useEffect(() => {
-      if (isChecked) {
-        let formattedText = "";
-        for (let i = 0; i < input.cipherText.length; i++) {
-          if (i % 5 === 0 && i !== 0) {
-            formattedText += " ";
-          }
-          formattedText += input.cipherText[i];
-        }
-        console.log("isi formated text",formattedText)
-        setInput({
-          ...input,
-          cipherText: formattedText,
-        });
-      } else {
-        setInput({
-          ...input,
-          cipherText: input.cipherText.replace(/\s+/g, '')
-        })
-      }
-    }, [isChecked]);
 
   return (
     <div className="landing-container">
@@ -161,13 +147,16 @@ const Akvc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-          <PlainTextField 
-            value={input.plainText} 
-            handler={handleChange} 
-            encrypt={handleClickEncrypt} 
-            selectedFormat={selectedFormat} 
-            setSelectedFormat={setSelectedFormat} 
-          />
+          <div className="plaintext-wrapper">
+            <PlainTextField 
+              value={input.plainText} 
+              handler={handleChange} 
+              encrypt={handleClickEncrypt} 
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked}/>
+          </div>
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <KeyField handler={handleChange} value={input.key}/>
@@ -179,7 +168,6 @@ const Akvc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
-            <FieldOutput setIsSelected={setIsChecked} isSelected={isChecked} />
           </div>
         </div>
       </div>

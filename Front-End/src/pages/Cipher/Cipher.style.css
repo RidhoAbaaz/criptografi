@@ -163,9 +163,13 @@
 }
 
 .flex-container {
-  display: grid;
-  gap: 10px;
-  grid-row: 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+}
+
+.flex-container.small-gap {
+  gap: 30px;
 }
 
 .affine-container {
@@ -181,4 +185,13 @@
   width: 18px;
   height: auto;
   margin: 0px 0px 0px 5px;
+}
+
+.plaintext-wrapper {
+  grid-column: span 2; /* Atur ini sesuai slot grid PlainTextField awal */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Agar anaknya (PlainTextField) tidak aneh */
+  width: 100%;
+  gap: 30px;
 }

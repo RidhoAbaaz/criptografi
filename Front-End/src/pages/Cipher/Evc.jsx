@@ -70,6 +70,17 @@ const Evc = () => {
           console.error("Server response does not contain cipherText:", data);
           return;
         }
+        if (selectedFormat === "text" && isChecked) {
+          let formattedText = "";
+          for (let i = 0; i < data.cipherText.length; i++) {
+            if (i % 5 === 0 && i !== 0) {
+              formattedText += " ";
+            }
+            formattedText += data.cipherText[i];
+          }
+          console.log("isi formated text",formattedText)
+          data.cipherText = formattedText;
+        }
   
         setInput({
           ...input,
@@ -81,7 +92,6 @@ const Evc = () => {
               : data.cipherText
             : data.cipherText,
         });
-        setIsChecked(true);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -92,8 +102,6 @@ const Evc = () => {
       alert("Cipher text cannot be empty");
       return;
     }
-
-    console.log("Input cipherText:", input.cipherText); // Log di sini
   
     if (!input.key.trim()) {
       console.error("Kunci tidak boleh kosong.");
@@ -107,16 +115,35 @@ const Evc = () => {
       return;
     }
 
+    if (selectedFormat === "text") {
+      const text = input.cipherText;
+      let allMultiplesAreSpaces = true;
+      const targetIndices = [];
+    
+      // Cek semua index mulai dari 5, kelipatan 6 (5, 11, 17, ...)
+      for (let i = 5; i < text.length; i += 6) {
+        if (text[i] !== " ") {
+          allMultiplesAreSpaces = false;
+          break;
+        }
+        targetIndices.push(i); // simpan indeks yang perlu dihapus jika valid
+      }
+    
+      if (allMultiplesAreSpaces) {
+        let result = "";
+        for (let i = 0; i < text.length; i++) {
+          // Hapus hanya spasi pada indeks yang sudah dicek
+          if (targetIndices.includes(i) && text[i] === " ") continue;
+          result += text[i];
+        }
+        input.cipherText = result;
+      }
+    }    
+
     const isBinary = selectedFormat === "binary";
     const cipherText = isBinary
       ? new Uint8Array(input.cipherText.split(" ").map(Number)) // Convert to Uint8Array if binary
       : input.cipherText;
-
-    console.log("Converted cipherText:", cipherText); // Log di sini
-  
-    // Log data type and value of cipherText
-    console.log("Tipe data cipherText:", isBinary ? "Uint8Array" : typeof cipherText);
-    console.log("Isi cipherText:", isBinary ? Array.from(cipherText) : cipherText);
   
     fetch("http://localhost:8080/extendedVigenere", {
       method: "POST",
@@ -148,8 +175,6 @@ const Evc = () => {
               : data.plainText
             : data.plainText,
         });
-
-        setIsChecked(false);
       })
       .catch((error) => console.error("Terjadi kesalahan:", error));
   };
@@ -159,28 +184,6 @@ const Evc = () => {
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
-
-  useEffect(() => {
-      if (isChecked) {
-        let formattedText = "";
-        for (let i = 0; i < input.cipherText.length; i++) {
-          if (i % 5 === 0 && i !== 0) {
-            formattedText += " ";
-          }
-          formattedText += input.cipherText[i];
-        }
-        console.log("isi formated text",formattedText)
-        setInput({
-          ...input,
-          cipherText: formattedText,
-        });
-      } else {
-        setInput({
-          ...input,
-          cipherText: input.cipherText.replace(/\s+/g, '')
-        })
-      }
-    }, [isChecked]);
 
   return (
     <div className="landing-container">
@@ -204,13 +207,16 @@ const Evc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-          <PlainTextField 
-            value={input.plainText} 
-            handler={handleChange} 
-            encrypt={handleClickEncrypt} 
-            selectedFormat={selectedFormat} 
-            setSelectedFormat={setSelectedFormat} 
-          />
+          <div className="plaintext-wrapper">
+            <PlainTextField 
+              value={input.plainText} 
+              handler={handleChange} 
+              encrypt={handleClickEncrypt} 
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked}/>
+          </div>
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <KeyField value={input.key} handler={handleChange}/>
@@ -222,7 +228,6 @@ const Evc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
-            <FieldOutput setIsSelected={setIsChecked} isSelected={isChecked} />
           </div>
         </div>
       </div>

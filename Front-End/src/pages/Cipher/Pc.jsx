@@ -56,13 +56,23 @@ const Pc = () => {
     })
       .then(response => response.json())
       .then(data => {
+        if (isChecked) {
+          let formattedText = "";
+          for (let i = 0; i < data.cipherText.length; i++) {
+            if (i % 5 === 0 && i !== 0) {
+              formattedText += " ";
+            }
+            formattedText += data.cipherText[i];
+          }
+          console.log("isi formated text",formattedText)
+          data.cipherText = formattedText;
+        }
         setInput({
           ...input,
           plainText : "",
           key: "",
           cipherText: data.cipherText,
       })
-      setIsChecked(true);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));    
   }
@@ -85,6 +95,31 @@ const Pc = () => {
       alert("Key must only contain alphabetic characters (A-Z or a-z)");
       return;
     }
+
+    if (selectedFormat === "text") {
+      const text = input.cipherText;
+      let allMultiplesAreSpaces = true;
+      const targetIndices = [];
+    
+      // Cek semua index mulai dari 5, kelipatan 6 (5, 11, 17, ...)
+      for (let i = 5; i < text.length; i += 6) {
+        if (text[i] !== " ") {
+          allMultiplesAreSpaces = false;
+          break;
+        }
+        targetIndices.push(i); // simpan indeks yang perlu dihapus jika valid
+      }
+    
+      if (allMultiplesAreSpaces) {
+        let result = "";
+        for (let i = 0; i < text.length; i++) {
+          // Hapus hanya spasi pada indeks yang sudah dicek
+          if (targetIndices.includes(i) && text[i] === " ") continue;
+          result += text[i];
+        }
+        input.cipherText = result;
+      }
+    }    
     
     fetch('http://localhost:8080/playFairCipher', {
       method: 'POST',
@@ -105,7 +140,6 @@ const Pc = () => {
           key: "",
           plainText : data.plainText,
         })
-        setIsChecked(false);
       })
       .catch(error => console.error('Terjadi kesalahan:', error));
   }
@@ -114,28 +148,6 @@ const Pc = () => {
   const toggleDarkMode = () => {
     setDarkMode(!isDarkMode);
   };
-
-    useEffect(() => {
-      if (isChecked) {
-        let formattedText = "";
-        for (let i = 0; i < input.cipherText.length; i++) {
-          if (i % 5 === 0 && i !== 0) {
-            formattedText += " ";
-          }
-          formattedText += input.cipherText[i];
-        }
-        console.log("isi formated text",formattedText)
-        setInput({
-          ...input,
-          cipherText: formattedText,
-        });
-      } else {
-        setInput({
-          ...input,
-          cipherText: input.cipherText.replace(/\s+/g, '')
-        })
-      }
-    }, [isChecked]);
 
   return (
     <div className="landing-container">
@@ -159,13 +171,16 @@ const Pc = () => {
 
         <div className="chiper">
           <div className="chiper-grid">
-          <PlainTextField 
-            value={input.plainText} 
-            handler={handleChange} 
-            encrypt={handleClickEncrypt} 
-            selectedFormat={selectedFormat} 
-            setSelectedFormat={setSelectedFormat} 
-          />
+<div className="plaintext-wrapper">
+            <PlainTextField 
+              value={input.plainText} 
+              handler={handleChange} 
+              encrypt={handleClickEncrypt} 
+              selectedFormat={selectedFormat} 
+              setSelectedFormat={setSelectedFormat} 
+            />
+            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked}/>
+          </div>
             <div className="flex-container">
               <h1 className="icon-arrow">&#8596;</h1>
               <KeyField value={input.key} handler={handleChange}/>
@@ -177,7 +192,6 @@ const Pc = () => {
               selectedFormat={selectedFormat} 
               setSelectedFormat={setSelectedFormat} 
             />
-            <FieldOutput isSelected={isChecked} setIsSelected={setIsChecked} />
           </div>
         </div>
       </div>
